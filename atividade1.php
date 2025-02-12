@@ -15,7 +15,7 @@
         <input type="text" name="valor1" placeholder="Valor 1"> <br>
         <label>Digite o segundo valor: </label>
         <input type="text" name="valor2" placeholder="Valor 2 (se necessário)"> <br> <br>
-        <select name="opcao_calculo">
+        <select name="selecao_calculo">
             <option value="circulo">a. Calcular a área de um Círculo</option>
             <option value="triangulo">b. Calcular a área de um Triângulo</option>
             <option value="quadrado">c. Calcular a área de um Quadrado</option>
