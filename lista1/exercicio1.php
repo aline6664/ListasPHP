@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>Calculadora de Áreas</h1>
-    <form method="GET" action="processamento.php">
+    <form method="POST" action="processamento1.php">
         <label>Digite o primeiro valor: </label>
         <input type="text" name="valor1" placeholder="Valor 1"> <br>
         <label>Digite o segundo valor: </label>

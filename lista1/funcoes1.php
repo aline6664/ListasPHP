@@ -1,6 +1,6 @@
 <?php
 function calculo_circulo($valor1) {
-    $result = 3.14 * ($valor ** 2);
+    $result = 3.14 * ($valor1 ** 2);
     return $result;
 }
 function calculo_triangulo($valor1,$valor2) {
