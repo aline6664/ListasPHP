@@ -1,54 +1,70 @@
-<?php  
-    if(!empty($_POST['comprimento']) && !empty($_POST['altura'])) {
-        $comprimento = $_POST['comprimento'];
-        $altura = $_POST['altura'];
-        
-        // definir classe 
-        class Retangulo {
-            private $comprimento;
-            private $altura;
-        
-            // construtor (valor default 1)
-            function __construct() {
-                $this->comprimento = 1;
-                $this->altura = 1;
-            }
-            // get e set
-            function setComprimento($comprimento) {
-                $this->comprimento = $comprimento;
-            }
-            function getComprimento() {
-                return $this->comprimento;
-            }
-            function setAltura($altura) {
-                $this->altura = $altura;
-            }
-            function getAltura() {
-                return $this->altura;
-            }
-            // métodos
-            function CalcularPerimetro() {
-                $perimetro = ($this->comprimento * 2) + ($this->altura * 2);
-                return $perimetro;
-            }
-            function CalcularArea() {
-                $area = $this->comprimento * $this->altura;
-                return $area;
-            }
-            function ehQuadrado() {
-                if($this->comprimento == $this->altura) {
-                    return true;
-                }
-            }
+<?php
+
+    session_start();
+
+    // Definir classe 
+    class Retangulo {
+        private $comprimento;
+        private $altura;
+
+        // Construtor (valor default 1)
+        public function __construct() {
+            $this->comprimento = 1;
+            $this->altura = 1;
+        }
+
+        // Get e Set
+        public function getComprimento() {
+            return $this->comprimento;
         }
         
-        // main
-        $retangulo = new Retangulo();
-        $retangulo->setComprimento(5);
-        $retangulo->setAltura(5);
-        echo 'Comprimento: ' . $retangulo->getComprimento() . '<br> Altura: ' . $retangulo->getAltura() . '<br>';
-        echo 'Perimêtro: ' . $retangulo->CalcularPerimetro() . '<br>';
-        echo 'Area: ' . $retangulo->CalcularArea() . '<br>';
-        echo 'É quadrado? ' . ($retangulo->ehQuadrado() ? 'Sim' : 'Não'); // if ternário
+        public function setComprimento($comprimento) {
+            if ($comprimento > 0) {
+                $this->comprimento = $comprimento;
+            }
+            else {
+                throw new Exception("O comprimento deve ser maior que zero.");
+            }
+        }
+        public function getAltura() {
+            return $this->altura;
+        }
+        public function setAltura($altura) {
+            if ($altura > 0) {
+                $this->altura = $altura;
+            }
+            else {
+                throw new Exception("A altura deve ser maior que zero.");
+            }
+        }
+
+        // Métodos
+        public function CalcularPerimetro() {
+            return 2* ($this->comprimento + $this->altura);
+        }
+        public function CalcularArea() {
+            return $this->comprimento * $this->altura;
+        }
+        public function ehQuadrado() {
+            return $this->comprimento === $this->altura;
+        }
+    }
+
+    // Exemplo de uso
+    $retangulo = new Retangulo();
+
+    // Recebendo valores digitados pelo usuário
+    if(!empty($_POST['comprimento']) && !empty($_POST['altura'])) {
+        $retangulo->setComprimento($_POST['comprimento']);
+        $retangulo->setAltura($altura = $_POST['altura']);
+
+        $_SESSION['comprimento'] = $retangulo->getComprimento();
+        $_SESSION['altura'] = $retangulo->getAltura();
+        $_SESSION['area'] = $retangulo->CalcularArea();
+        $_SESSION['perimetro'] = $retangulo->CalcularPerimetro();
+        $_SESSION['eQuadrado'] = ($retangulo->ehQuadrado() ? "Sim" : "Não");
+
+        header('location: exercicio1.php');
+        exit();
     }
 ?>
