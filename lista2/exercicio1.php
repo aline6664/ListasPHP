@@ -17,15 +17,15 @@
         <input id="enviar" type="submit" value="Calcular"> <br> <br>
 
     <?php
-            if(isset($_SESSION['comprimento']) && isset($_SESSION['altura']) && isset($_SESSION['area']) && isset($_SESSION['perimetro']) && isset($_SESSION['eQuadrado']))
-            {
-                echo "<h3> Resultados </h3>";
-                echo "Comprimento: " . $_SESSION['comprimento'] . "<br>";
-                echo "Altura: " . $_SESSION['altura'] . "<br>";
-                echo "Área: " . $_SESSION['area'] . "<br>";
-                echo "Perímetro: " . $_SESSION['perimetro'] . "<br>";
-                echo "É quadrado? " . $_SESSION['eQuadrado'] . "<br>";
-            }
+        if(isset($_SESSION['comprimento']) && isset($_SESSION['altura']) && isset($_SESSION['area']) && isset($_SESSION['perimetro']) && isset($_SESSION['eQuadrado']))
+        {
+            echo "<h3> Resultados </h3>";
+            echo "Comprimento: " . $_SESSION['comprimento'] . "<br>";
+            echo "Altura: " . $_SESSION['altura'] . "<br>";
+            echo "Área: " . $_SESSION['area'] . "<br>";
+            echo "Perímetro: " . $_SESSION['perimetro'] . "<br>";
+            echo "É quadrado? " . $_SESSION['eQuadrado'] . "<br>";
+        }
     ?>
     </form>
 </body>
