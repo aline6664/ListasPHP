@@ -36,10 +36,10 @@
         }
 
         // Métodos
-        public function calcularPerimetro() {
+        public function CalcularPerimetro() {
             return 2* ($this->comprimento + $this->altura);
         }
-        public function calcularArea() {
+        public function CalcularArea() {
             return $this->comprimento * $this->altura;
         }
         public function ehQuadrado() {
