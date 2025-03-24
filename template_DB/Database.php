@@ -1,5 +1,4 @@
 <?php
-
 require_once "DBClientes.php";
 
 class Database {
@@ -24,14 +23,16 @@ class Database {
         try {
             // conexão
             $this->DBConn = new PDO('mysql:host=' . $this->host, $this->username, $this->password);
+            echo "Conexão bem-sucedida!"; // para verificar se conexão foi sucesso
             $this->DBConn->exec('CREATE DATABASE IF NOT EXISTS ' . $this->db_name);
-            echo "Banco de dados '$this->db_name' criado ou já existe.\n";
+            echo "Banco de dados '$this->db_name' criado ou já existe.";
     
             // reconectar ao novo database
             $this->DBConn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
-            $this->DBConn->exec('set names utf8'); // Enable UTF-8 character set
+            $this->DBConn->exec('set names utf8');
         } catch (PDOException $e) {
-            echo "Erro ao criar o banco de dados: " . $e->getMessage();
+            error_log("Erro ao criar o banco de dados: " . $e->getMessage());
+            die("Erro ao conectar-se ao banco.");
         }
     }
 
@@ -44,7 +45,8 @@ class Database {
             $this->DBConn->exec('set names utf8'); // permitir o uso de caracteres especiais
         }
         catch (PDOException $e) {
-            echo "Erro na conexão com o banco de dados." . $e->getMessage();
+            error_log("Erro ao conectar-se ao banco: " .$e->getMessage());
+            die("Falha na conexão. Por favor, tente novamente mais tarde.");
         }
         return $this->DBConn;
     }
