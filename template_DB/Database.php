@@ -23,9 +23,9 @@ class Database {
         try {
             // conexão
             $this->DBConn = new PDO('mysql:host=' . $this->host, $this->username, $this->password);
-            echo "Conexão bem-sucedida!"; // para verificar se conexão foi sucesso
+            // echo "Conexão bem-sucedida!"; // para verificar se conexão funcionou
             $this->DBConn->exec('CREATE DATABASE IF NOT EXISTS ' . $this->db_name);
-            echo "Banco de dados '$this->db_name' criado ou já existe.";
+            // echo "Banco de dados '$this->db_name' criado ou já existe.";
     
             // reconectar ao novo database
             $this->DBConn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);

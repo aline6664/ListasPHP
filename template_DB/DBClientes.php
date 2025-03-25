@@ -93,15 +93,37 @@ class DBClientes {
         }
     }
 
-    public function update($id, $nome, $CPF, $email) {
+    public function update($id, $nome, $CPF, $email) { // dados são null por default caso parametros não sejam passados
         // atualiza o ID com os dados do parâmetro - UPDATE
-        $sql = 'UPDATE ' . $this->tableName . ' SET nome = :nome, CPF = :CPF, email = :email WHERE id = :id';
+        $sql = 'UPDATE ' . $this->tableName . ' SET ';
+        $parametros = [];
+
+        // adicionando dados dinamicamente dependendo dos parametros passados
+        if ($nome !== null) {
+            $sql .= 'nome = :nome, ';
+            $parametros[':nome'] = $nome;
+        }
+        if ($CPF !== null) {
+            $sql .= 'CPF = :CPF, ';
+            $parametros[':CPF'] = $CPF;
+        }
+        if ($email !== null) {
+            $sql .= 'email = :email, ';
+            $parametros[':email'] = $email;
+        }
+
+        // juntando as strings em um unico sql
+        $sql = rtrim($sql, ', ') . ' WHERE id = :id';
+        
+        // passando o parametro de ID
+        $parametros[':id'] = $id;
+
         try {
             $acesso = $this->conexao->prepare($sql);
-            $acesso->bindParam(':id', $id);
-            $acesso->bindParam(':nome', $nome);
-            $acesso->bindParam(':CPF', $CPF);
-            $acesso->bindParam(':email', $email);
+            // realizando bind dinamicamente dependendo dos parametros passados
+            foreach ($parametros as $key => $value) {
+                $acesso->bindValue($key, $value);
+            }
             if ($acesso->execute()) {
                 return true;
             }
