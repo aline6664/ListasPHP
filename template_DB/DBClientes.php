@@ -93,46 +93,36 @@ class DBClientes {
         }
     }
 
-    public function update($id, $nome, $CPF, $email) { // dados são null por default caso parametros não sejam passados
-        // atualiza o ID com os dados do parâmetro - UPDATE
-        $sql = 'UPDATE ' . $this->tableName . ' SET ';
-        $parametros = [];
-
-        // adicionando dados dinamicamente dependendo dos parametros passados
-        if ($nome !== null) {
-            $sql .= 'nome = :nome, ';
-            $parametros[':nome'] = $nome;
+    public function update($id, $nome = null, $cpf = null, $email = null) {
+        $campos = []; // array de campos que foram alterados
+        $parametros = []; // array de valores recebidos
+        if ($nome) {
+            $campos[] = "nome = ?"; // ? -> valor placeholder do parametro query
+            $parametros[] = $nome;
         }
-        if ($CPF !== null) {
-            $sql .= 'CPF = :CPF, ';
-            $parametros[':CPF'] = $CPF;
+        if ($cpf) {
+            $campos[] = "CPF = ?";
+            $parametros[] = $cpf;
         }
-        if ($email !== null) {
-            $sql .= 'email = :email, ';
-            $parametros[':email'] = $email;
+        if ($email) {
+            $campos[] = "email = ?";
+            $parametros[] = $email;
         }
-
-        // juntando as strings em um unico sql
-        $sql = rtrim($sql, ', ') . ' WHERE id = :id';
-        
-        // passando o parametro de ID
-        $parametros[':id'] = $id;
-
+        // se nenhum campo for passado (array de campos está vazio)
+        if (count($campos) === 0) {
+            return false;
+        }
+        // query SQL criado dinamicamente
+        // implode() junto os valores da array $campos separados por vírgula
+        $sql = 'UPDATE ' . $this->tableName . ' SET ' . implode(", ", $campos) . ' WHERE id = ?';
+        $parametros[] = $id;  // Always append the ID at the end
+    
         try {
             $acesso = $this->conexao->prepare($sql);
-            // realizando bind dinamicamente dependendo dos parametros passados
-            foreach ($parametros as $key => $value) {
-                $acesso->bindValue($key, $value);
-            }
-            if ($acesso->execute()) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        catch (PDOException $erro) {
-            echo "Erro ao atualizar o cliente: " . $erro->getMessage();
+            return $acesso->execute($parametros);
+        } catch (PDOException $e) {
+            echo "Erro ao atualizar o cliente: " . $e->getMessage();
+            return false;
         }
     }
 

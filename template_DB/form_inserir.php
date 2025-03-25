@@ -98,11 +98,7 @@
         else if ($acao == "alterar") {
             $cliente = $bdClientes->update($id, $nome, $cpf, $email);
             if ($cliente) {
-                echo "<p>Dados alterados com sucesso! <br> Novos dados: <br>";
-                echo "ID: " . $id . "<br>";
-                echo "Nome: " . $nome . "<br>";
-                echo "CPF: " . $cpf . "<br>";
-                echo "Email: " . $email . "<br>";
+                echo "<p>Dados alterados com sucesso!</p>";
             }
             else {
                 echo "<p>Erro ao alterar os dados.</p>";
